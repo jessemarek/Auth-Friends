@@ -28,8 +28,11 @@ button {
 }
 
 .form {
+  display: flex;
+  justify-content: center;
   width: 50%;
   margin: 0 auto;
+
 }
 
 .friends-list {
@@ -62,5 +65,8 @@ button {
 
 .edit-form {
   margin: 10%;
-  
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 2%;
+  box-shadow: 2px 2px 10px #444;
 }

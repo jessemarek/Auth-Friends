@@ -58,7 +58,7 @@ const EditFriend = props => {
 
     /********************************* JSX *********************************/
     return (
-        <div className="edit-form">
+        <div className="edit-form form">
             <form onSubmit={onSubmit}>
                 <label>Name:
                     <input
