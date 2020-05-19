@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { axiosWithAuth } from '../utils/axiousWithAuth'
 
-const Login = props => {
+const Login = () => {
+
+    const { push } = useHistory()
 
     const initialCredentials = {
         username: '',
@@ -23,15 +26,13 @@ const Login = props => {
             .post('/api/login', credentials)
             .then(res => {
                 localStorage.setItem('token', res.data.payload)
-                props.history.push('/friends')
+                push('/friends')
             })
             .catch(err => console.log(err))
-
-        setCredentials(initialCredentials)
     }
 
     return (
-        <div className="login-form">
+        <div className="form">
             <form onSubmit={onSubmit}>
                 <label>Username:
                 <input
