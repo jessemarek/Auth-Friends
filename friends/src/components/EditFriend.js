@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import { axiosWithAuth } from '../utils/axiousWithAuth'
 
-const AddFriend = () => {
+const EditFriend = props => {
+    const {
+        friendData,
+        friendsList,
+        setFriendsList,
+        setIsEditing
 
-    const { push } = useHistory()
+    } = props
 
     const initialFormValues = {
         name: '',
@@ -14,6 +18,12 @@ const AddFriend = () => {
 
     /******************************** STATE ********************************/
     const [formValues, setFormValues] = useState(initialFormValues)
+
+
+    /***************************** SIDE EFFECTS *****************************/
+    useEffect(() => {
+        setFormValues(friendData)
+    }, [friendData])
 
 
     /****************************** CALLBACKS ******************************/
@@ -27,14 +37,28 @@ const AddFriend = () => {
     const onSubmit = e => {
         e.preventDefault()
         axiosWithAuth()
-            .post('/api/friends', { ...formValues, age: Number(formValues.age) })
-            .then(res => push('/friends'))
+            .put(`/api/friends/${friendData.id}`, { ...formValues, id: friendData.id, age: Number(formValues.age) })
+            .then(res => {
+                setFriendsList(friendsList.map(f => f.id !== friendData.id ? f : { ...friendData }))
+                setIsEditing(false)
+            })
+            .catch(err => console.log(err.response))
+    }
+
+    const deleteFriend = e => {
+        e.preventDefault()
+        axiosWithAuth()
+            .delete(`/api/friends/${friendData.id}`)
+            .then(res => {
+                setFriendsList(friendsList.filter(f => f.id !== friendData.id))
+                setIsEditing(false)
+            })
             .catch(err => console.log(err.response))
     }
 
     /********************************* JSX *********************************/
     return (
-        <div className="form">
+        <div className="edit-form">
             <form onSubmit={onSubmit}>
                 <label>Name:
                     <input
@@ -63,11 +87,11 @@ const AddFriend = () => {
                     />
                 </label>
 
-                <button>Add Friend</button>
+                <button>Update Friend</button>
+                <button type="button" onClick={deleteFriend}>Delete Friend</button>
             </form>
-
         </div>
     )
 }
 
-export default AddFriend
+export default EditFriend

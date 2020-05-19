@@ -11,8 +11,11 @@ const Login = () => {
         password: ''
     }
 
+    /******************************** STATE ********************************/
     const [credentials, setCredentials] = useState(initialCredentials)
 
+
+    /****************************** CALLBACKS ******************************/
     const handleChanges = e => {
         setCredentials({
             ...credentials,
@@ -31,6 +34,7 @@ const Login = () => {
             .catch(err => console.log(err))
     }
 
+    /********************************* JSX *********************************/
     return (
         <div className="form">
             <form onSubmit={onSubmit}>
