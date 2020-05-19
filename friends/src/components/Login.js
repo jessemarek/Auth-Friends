@@ -23,9 +23,11 @@ const Login = props => {
             .post('/api/login', credentials)
             .then(res => {
                 localStorage.setItem('token', res.data.payload)
-                props.history.push('/protected')
+                props.history.push('/friends')
             })
             .catch(err => console.log(err))
+
+        setCredentials(initialCredentials)
     }
 
     return (

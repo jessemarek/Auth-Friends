@@ -3,7 +3,7 @@ import { axiosWithAuth } from '../utils/axiousWithAuth'
 
 import Friend from './Friend'
 
-const Friends = props => {
+const FriendsList = props => {
 
     const [friendsList, setFriendsList] = useState([])
 
@@ -26,4 +26,4 @@ const Friends = props => {
     )
 }
 
-export default Friends
+export default FriendsList
